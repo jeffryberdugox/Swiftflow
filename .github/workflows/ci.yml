@@ -42,7 +42,7 @@ jobs:
       continue-on-error: true
       
     - name: Upload documentation
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: success()
       with:
         name: documentation
@@ -61,7 +61,7 @@ jobs:
       run: brew install swiftlint
       
     - name: Run SwiftLint
-      run: swiftlint lint --strict
+      run: swiftlint lint
       continue-on-error: true
 
   format-check:

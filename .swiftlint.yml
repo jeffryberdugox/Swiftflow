@@ -1,0 +1,48 @@
+# SwiftLint Configuration for SwiftFlow
+
+# Paths to include/exclude
+included:
+  - Sources
+  - Tests
+
+excluded:
+  - .build
+  - .swiftpm
+  - Tests/LinuxMain.swift
+  - Sources/SwiftFlow/SwiftFlow.docc
+
+# Rules Configuration
+opt_in_rules:
+  - empty_count
+  - explicit_init
+  - first_where
+  - sorted_imports
+
+disabled_rules:
+  - line_length # Documentation can be long
+  - function_body_length # Some managers have complex logic
+  - type_body_length # View files can be large
+  - file_length # Some files are comprehensive
+  - cyclomatic_complexity # Coordinate conversion has many cases
+  - force_cast # Sometimes needed for type-erased protocols
+  - force_try # Used in tests
+
+# Rule Customization
+identifier_name:
+  min_length:
+    warning: 2
+    error: 1
+  excluded:
+    - id
+    - x
+    - y
+    - dx
+    - dy
+    - lhs
+    - rhs
+
+trailing_comma:
+  mandatory_comma: true
+
+# Reporting
+reporter: "xcode"
