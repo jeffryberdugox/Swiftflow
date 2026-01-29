@@ -58,21 +58,12 @@ Perfect for building:
 - ``CanvasCommand``
 - ``CanvasTransaction``
 
-### Advanced
+### Guides
 
 - <doc:CoordinateSystem>
 - <doc:PortPositioning>
-- ``AdvancedAccess``
-- ``FlowStore``
 
-### Events & Callbacks
+### Utilities
 
-- ``NodeDragEvent``
-- ``ConnectionStartEvent``
-- ``ViewportChangeEvent``
-
-### Helper Functions
-
-- ``getBezierPath(sourceX:sourceY:targetX:targetY:sourcePosition:targetPosition:curvature:)``
-- ``getSmoothStepPath(sourceX:sourceY:targetX:targetY:sourcePosition:targetPosition:borderRadius:)``
-- ``getRectOfNodes(_:)``
+- ``PathResult``
+- ``PortPosition``
