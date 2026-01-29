@@ -1519,57 +1519,57 @@ public struct ResizeHandleConfig: Equatable {
 
 public extension CanvasView {
     func onNodeMoved(_ handler: @escaping (Node, CGPoint) -> Void) -> Self {
-        var copy = self
-        copy.onNodeMoved = handler
-        return copy
+        var modified = self
+        modified.onNodeMoved = handler
+        return modified
     }
     
     func onSelectionChanged(_ handler: @escaping (Set<UUID>) -> Void) -> Self {
-        var copy = self
-        copy.onSelectionChanged = handler
-        return copy
+        var modified = self
+        modified.onSelectionChanged = handler
+        return modified
     }
     
     func onConnectionCreated(_ handler: @escaping (UUID, UUID, UUID, UUID) -> Void) -> Self {
-        var copy = self
-        copy.onConnectionCreated = handler
-        return copy
+        var modified = self
+        modified.onConnectionCreated = handler
+        return modified
     }
     
     func onNodeResized(_ handler: @escaping (Node, CGSize) -> Void) -> Self {
-        var copy = self
-        copy.onNodeResized = handler
-        return copy
+        var modified = self
+        modified.onNodeResized = handler
+        return modified
     }
     
     func onNodesDeleted(_ handler: @escaping (Set<UUID>, Set<UUID>) -> Void) -> Self {
-        var copy = self
-        copy.onNodesDeleted = handler
-        return copy
+        var modified = self
+        modified.onNodesDeleted = handler
+        return modified
     }
     
     func onNodesPasted(_ handler: @escaping ([Node], [Edge]) -> Void) -> Self {
-        var copy = self
-        copy.onNodesPasted = handler
-        return copy
+        var modified = self
+        modified.onNodesPasted = handler
+        return modified
     }
     
     func onCanvasAction(_ handler: @escaping CanvasActionHandler<Node, Edge>) -> Self {
-        var copy = self
-        copy.customActionHandler = handler
-        return copy
+        var modified = self
+        modified.customActionHandler = handler
+        return modified
     }
     
     func keyboardConfig(_ config: KeyboardConfig) -> Self {
-        var copy = self
-        copy.keyboardConfig = config
-        return copy
+        var modified = self
+        modified.keyboardConfig = config
+        return modified
     }
     
     func controls(_ show: Bool) -> Self {
-        var copy = self
-        copy.showControls = show
-        return copy
+        var modified = self
+        modified.showControls = show
+        return modified
     }
     
     // MARK: - Node Toolbar API
@@ -1589,25 +1589,25 @@ public extension CanvasView {
     // MARK: - Resize Handle API
 
     func resizeHandle(config: ResizeHandleConfig = .default) -> Self {
-        var copy = self
-        copy.resizeHandleConfig = config
-        return copy
+        var modified = self
+        modified.resizeHandleConfig = config
+        return modified
     }
 
     func resizeOverlay<OverlayContent: View>(
         @ViewBuilder content: @escaping (Node, Bool, ResizeManager) -> OverlayContent
     ) -> Self {
-        var copy = self
-        copy.resizeOverlayContent = { node, isSelected, manager in
+        var modified = self
+        modified.resizeOverlayContent = { node, isSelected, manager in
             AnyView(content(node, isSelected, manager))
         }
-        return copy
+        return modified
     }
     
     func onNodeEdit(_ handler: @escaping (Node) -> Void) -> Self {
-        var copy = self
-        copy.onNodeEdit = handler
-        return copy
+        var modified = self
+        modified.onNodeEdit = handler
+        return modified
     }
     
     // MARK: - Edge Accessory API
@@ -1616,12 +1616,12 @@ public extension CanvasView {
         config: EdgeAccessoryConfig = .default,
         @ViewBuilder content: @escaping (Edge, CGPoint, Bool, DragManager) -> AccessoryContent
     ) -> Self {
-        var copy = self
-        copy.edgeAccessoryConfig = config
-        copy.edgeAccessoryContent = { edge, position, isHovering, dragManager in
+        var modified = self
+        modified.edgeAccessoryConfig = config
+        modified.edgeAccessoryContent = { edge, position, isHovering, dragManager in
             AnyView(content(edge, position, isHovering, dragManager))
         }
-        return copy
+        return modified
     }
     
     // MARK: - Canvas Controls API
@@ -1630,12 +1630,12 @@ public extension CanvasView {
         position: PanelPosition? = nil,
         @ViewBuilder content: @escaping (PanZoomManager, [Node], AnyView) -> ControlsContent
     ) -> Self {
-        var copy = self
-        copy.customControlsPosition = position
-        copy.customControlsContent = { manager, nodes, defaultView in
+        var modified = self
+        modified.customControlsPosition = position
+        modified.customControlsContent = { manager, nodes, defaultView in
             AnyView(content(manager, nodes, defaultView))
         }
-        return copy
+        return modified
     }
     
     // MARK: - Canvas MiniMap API
@@ -1651,12 +1651,12 @@ public extension CanvasView {
             AnyView
         ) -> MiniMapContent
     ) -> Self {
-        var copy = self
-        copy.customMiniMapPosition = position
-        copy.customMiniMapContent = { nodes, selected, manager, controller, config, defaultView in
+        var modified = self
+        modified.customMiniMapPosition = position
+        modified.customMiniMapContent = { nodes, selected, manager, controller, config, defaultView in
             AnyView(content(nodes, selected, manager, controller, config, defaultView))
         }
-        return copy
+        return modified
     }
 }
 
@@ -1774,17 +1774,17 @@ public extension CanvasView {
     func onConnectionDroppedOnCanvas(
         _ handler: @escaping (ConnectionDropContext) -> ConnectionDropAction
     ) -> Self {
-        var copy = self
-        copy.onConnectionDroppedOnCanvas = handler
-        return copy
+        var modified = self
+        modified.onConnectionDroppedOnCanvas = handler
+        return modified
     }
 
     /// Set a handler to be called whenever the canvas transform changes (pan/zoom)
     /// - Parameter handler: Callback receiving the new transform
     func onTransformChanged(_ handler: @escaping (FlowTransform) -> Void) -> Self {
-        var copy = self
-        copy.onTransformChanged = handler
-        return copy
+        var modified = self
+        modified.onTransformChanged = handler
+        return modified
     }
 }
 
