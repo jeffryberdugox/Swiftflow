@@ -1,0 +1,20 @@
+# Code Owners for SwiftFlow
+# These users are automatically requested for review when someone opens a PR
+
+# Global owner
+* @jeffryberdugox
+
+# Core architecture
+/Sources/SwiftFlow/Core/ @jeffryberdugox
+/Sources/SwiftFlow/Protocols/ @jeffryberdugox
+
+# Tests
+/Tests/ @jeffryberdugox
+
+# Documentation
+/Documentation/ @jeffryberdugox
+/Sources/SwiftFlow/SwiftFlow.docc/ @jeffryberdugox
+
+# CI/CD and project configuration
+/.github/ @jeffryberdugox
+/Package.swift @jeffryberdugox
