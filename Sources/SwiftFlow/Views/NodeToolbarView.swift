@@ -275,7 +275,7 @@ public extension View {
         height: 100
     )
     
-    ZStack {
+    return ZStack {
         Color.gray.opacity(0.2)
         
         // Node representation

@@ -1578,12 +1578,12 @@ public extension CanvasView {
         config: NodeToolbarConfig = .default,
         @ViewBuilder content: @escaping (Node, PanZoomManager, NodeToolbarActions) -> ToolbarContent
     ) -> Self {
-        var copy = self
-        copy.nodeToolbarConfig = config
-        copy.nodeToolbarContent = { node, manager, actions in
+        var modified = self
+        modified.nodeToolbarConfig = config
+        modified.nodeToolbarContent = { node, manager, actions in
             AnyView(content(node, manager, actions))
         }
-        return copy
+        return modified
     }
 
     // MARK: - Resize Handle API

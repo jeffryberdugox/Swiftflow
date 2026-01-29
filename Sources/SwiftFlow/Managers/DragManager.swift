@@ -174,8 +174,8 @@ public class DragManager: ObservableObject {
             // Get node sizes from start positions (assuming sizes don't change during drag)
             var nodeSizes: [UUID: CGSize] = [:]
             for nodeId in state.draggedNodes {
-                if let startPos = state.startPositions[nodeId],
-                   let distance = state.distances[nodeId] {
+                if state.startPositions[nodeId] != nil,
+                   state.distances[nodeId] != nil {
                     // Infer size from bounds (this is approximate, actual sizes should be passed from CanvasView)
                     nodeSizes[nodeId] = CGSize(width: 100, height: 100) // Default placeholder
                 }
