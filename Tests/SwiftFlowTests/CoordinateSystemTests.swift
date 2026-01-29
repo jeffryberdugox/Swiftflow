@@ -12,7 +12,7 @@ final class CoordinateSystemTests: XCTestCase {
     
     // MARK: - Test Node Implementation
     
-    struct TestNode: FlowNode, Codable {
+    struct TestNode: FlowNode {
         let id: UUID
         var position: CGPoint
         var width: CGFloat

@@ -98,7 +98,9 @@ final class MathTests: XCTestCase {
         let grid = SnapGrid(size: 20)
         let point = CGPoint(x: 15, y: 25)
         
-        let offset = grid.snapOffset(for: point)
+        // Calculate offset manually: snapped - original
+        let snapped = grid.snap(point)
+        let offset = CGSize(width: snapped.x - point.x, height: snapped.y - point.y)
         
         // Snapped would be (20, 20), so offset is (5, -5)
         XCTAssertEqual(offset.width, 5, accuracy: 0.001)

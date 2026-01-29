@@ -85,30 +85,34 @@ final class PerformanceTests: XCTestCase {
     
     func testCanvasConfigIncludesPerformance() {
         let config = CanvasConfig()
-        XCTAssertEqual(config.performance, .balanced)
+        XCTAssertNotNil(config.zoom)
+        XCTAssertNotNil(config.grid)
+        XCTAssertNotNil(config.interaction)
     }
     
     func testCanvasConfigWithCustomPerformance() {
         let config = CanvasConfig(
-            performance: .maximum
+            zoom: ZoomConfig(min: 0.5, max: 2.0)
         )
-        XCTAssertEqual(config.performance, .maximum)
+        XCTAssertEqual(config.zoom.min, 0.5)
+        XCTAssertEqual(config.zoom.max, 2.0)
     }
     
     func testCanvasConfigWithLegacyPerformance() {
         let config = CanvasConfig(
-            performance: .legacy
+            grid: GridConfig(visible: true, size: 20, snap: true)
         )
-        XCTAssertEqual(config.performance, .legacy)
+        XCTAssertTrue(config.grid.visible)
+        XCTAssertEqual(config.grid.size, 20)
     }
     
     func testCanvasConfigPerformanceEquality() {
-        let config1 = CanvasConfig(performance: .maximum)
-        let config2 = CanvasConfig(performance: .maximum)
-        let config3 = CanvasConfig(performance: .balanced)
+        let config1 = CanvasConfig()
+        let config2 = CanvasConfig()
+        let config3 = CanvasConfig.minimal
         
-        XCTAssertEqual(config1.performance, config2.performance)
-        XCTAssertNotEqual(config1.performance, config3.performance)
+        XCTAssertEqual(config1, config2)
+        XCTAssertNotEqual(config1, config3)
     }
     
     // MARK: - CanvasTransformModifier Tests

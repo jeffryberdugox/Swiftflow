@@ -131,13 +131,14 @@ public struct NodeToolbarView<Content: View>: View {
     /// Convenience initializer that calculates screen position from transform
     /// Note: This uses the current transform value synchronously.
     /// For reactive updates, use the main initializer and pass updated positions.
+    @MainActor
     public init(
         node: any FlowNode,
         panZoomManager: PanZoomManager,
         config: NodeToolbarConfig = .default,
         @ViewBuilder content: () -> Content
     ) {
-        // Access transform synchronously (works because we're on MainActor in SwiftUI context)
+        // Access transform synchronously (guaranteed MainActor context)
         let transform = panZoomManager.transform
         
         self.node = node

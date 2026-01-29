@@ -352,16 +352,22 @@ final class CommandIntegrationTests: XCTestCase {
     func testNewPushClearsRedo() {
         let undoStack = UndoStack()
         
-        // Push two transactions
-        undoStack.push(CanvasTransaction(name: "A", commands: [.clearSelection]))
-        undoStack.push(CanvasTransaction(name: "B", commands: [.clearSelection]))
+        let nodeId = UUID()
+        let moveCommand = CanvasCommand.moveNodes(
+            ids: [nodeId],
+            delta: CGSize(width: 10, height: 10)
+        )
+        
+        // Push two transactions with undoable commands
+        undoStack.push(CanvasTransaction(name: "A", commands: [moveCommand]))
+        undoStack.push(CanvasTransaction(name: "B", commands: [moveCommand]))
         
         // Undo one
         _ = undoStack.popUndo()
         XCTAssertTrue(undoStack.canRedo)
         
         // Push new transaction
-        undoStack.push(CanvasTransaction(name: "C", commands: [.clearSelection]))
+        undoStack.push(CanvasTransaction(name: "C", commands: [moveCommand]))
         
         // Redo should be cleared
         XCTAssertFalse(undoStack.canRedo)

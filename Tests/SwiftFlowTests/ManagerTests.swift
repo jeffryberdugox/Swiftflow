@@ -178,8 +178,12 @@ final class ManagerTests: XCTestCase {
         
         XCTAssertFalse(manager.isDragging)
         XCTAssertNotNil(finalPositions)
-        XCTAssertEqual(finalPositions?[nodeId]?.x, 150, accuracy: 0.001)
-        XCTAssertEqual(finalPositions?[nodeId]?.y, 120, accuracy: 0.001)
+        if let pos = finalPositions?[nodeId] {
+            XCTAssertEqual(pos.x, 150, accuracy: 0.001)
+            XCTAssertEqual(pos.y, 120, accuracy: 0.001)
+        } else {
+            XCTFail("Expected position for nodeId")
+        }
     }
     
     func testSnapToGrid() {
@@ -198,7 +202,11 @@ final class ManagerTests: XCTestCase {
         let finalPositions = manager.endDrag()
         
         // Should snap to grid
-        XCTAssertEqual(finalPositions?[nodeId]?.x.truncatingRemainder(dividingBy: 20), 0, accuracy: 0.001)
+        if let pos = finalPositions?[nodeId] {
+            XCTAssertEqual(pos.x.truncatingRemainder(dividingBy: 20), 0, accuracy: 0.001)
+        } else {
+            XCTFail("Expected position for nodeId")
+        }
     }
     
     // MARK: - ConnectionManager Tests
@@ -233,8 +241,12 @@ final class ManagerTests: XCTestCase {
         
         manager.updateConnection(to: CGPoint(x: 200, y: 150))
         
-        XCTAssertEqual(manager.connectionInProgress?.currentPosition.x, 200, accuracy: 0.001)
-        XCTAssertEqual(manager.connectionInProgress?.currentPosition.y, 150, accuracy: 0.001)
+        if let pos = manager.connectionInProgress?.currentPosition {
+            XCTAssertEqual(pos.x, 200, accuracy: 0.001)
+            XCTAssertEqual(pos.y, 150, accuracy: 0.001)
+        } else {
+            XCTFail("Expected connection in progress")
+        }
     }
     
     func testCancelConnection() {
