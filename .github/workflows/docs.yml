@@ -39,7 +39,7 @@ jobs:
           --disable-indexing \
           --output-path ./docs \
           --transform-for-static-hosting \
-          --hosting-base-path SwiftFlow
+          --hosting-base-path Swiftflow
           
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
