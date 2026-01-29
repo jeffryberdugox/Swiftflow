@@ -506,9 +506,9 @@ controller.resizeNode(id:toWidth:height:)
 
 ## Resources
 
-- **Documentation**: https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/
-- **Getting Started**: https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/gettingstarted
-- **Coordinate System**: https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/coordinatesystem
+- **Documentation**: https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/
+- **Getting Started**: https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/gettingstarted
+- **Coordinate System**: https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/coordinatesystem
 - **Issues**: https://github.com/jeffryberdugox/SwiftFlow/issues
 
 ---

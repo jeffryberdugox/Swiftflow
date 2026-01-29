@@ -1539,4 +1539,4 @@ if isErrorOfType(error, code: .nodeNotFound) {
 
 - [Getting Started Guide](Guides/GettingStarted.md)
 - [Architecture Guide](Architecture.md)
-- [Coordinate System Guide](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/coordinatesystem)
+- [Coordinate System Guide](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/coordinatesystem)

@@ -50,9 +50,9 @@ dependencies: [
 
 ## 📚 Documentation
 
-- **[Getting Started](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/gettingstarted)** — Step-by-step tutorial
-- **[API Reference](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/)** — Complete documentation
-- **[Coordinate System](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/coordinatesystem)** — Understanding the architecture
+- **[Getting Started](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/gettingstarted)** — Step-by-step tutorial
+- **[API Reference](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/)** — Complete documentation
+- **[Coordinate System](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/coordinatesystem)** — Understanding the architecture
 
 ## 🛠️ Requirements
 
@@ -75,7 +75,7 @@ Inspired by [React Flow](https://reactflow.dev/) — thank you for pioneering ac
 
 ## 📞 Support
 
-- **Documentation**: https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/
+- **Documentation**: https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/
 - **Issues**: https://github.com/jeffryberdugox/SwiftFlow/issues
 - **Discussions**: https://github.com/jeffryberdugox/SwiftFlow/discussions
 

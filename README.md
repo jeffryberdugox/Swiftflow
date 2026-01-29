@@ -4,7 +4,7 @@
 [![Platform](https://img.shields.io/badge/platform-macOS%2013.0+-lightgrey.svg)](https://www.apple.com/macos/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![SwiftPM](https://img.shields.io/badge/SwiftPM-compatible-brightgreen.svg)](https://swift.org/package-manager)
-[![Documentation](https://img.shields.io/badge/docs-Swift%20DocC-blue)](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/)
+[![Documentation](https://img.shields.io/badge/docs-Swift%20DocC-blue)](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/)
 
 A modern, declarative **node-based editor framework** for **SwiftUI**. Build interactive flowcharts, diagrams, and visual programming tools for macOS.
 
@@ -69,7 +69,7 @@ struct ContentView: View {
 }
 ```
 
-**👉 [Read the full Getting Started guide](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/gettingstarted)**
+**👉 [Read the full Getting Started guide](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/gettingstarted)**
 
 ---
 
@@ -98,10 +98,10 @@ SwiftFlow uses **Swift-DocC** for interactive, Xcode-integrated documentation.
 
 ### Quick Access
 
-- **[Online Documentation](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/)** — Browse online
-- **[Getting Started](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/gettingstarted)** — Step-by-step tutorial
-- **[API Reference](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/)** — Complete API documentation
-- **[Coordinate System](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/coordinatesystem)** — Understanding the three-space architecture
+- **[Online Documentation](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/)** — Browse online
+- **[Getting Started](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/gettingstarted)** — Step-by-step tutorial
+- **[API Reference](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/)** — Complete API documentation
+- **[Coordinate System](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/coordinatesystem)** — Understanding the three-space architecture
 
 ### In Xcode
 
@@ -137,7 +137,25 @@ SwiftFlow is built around three key protocols:
 
 Everything else is built on top of these simple primitives.
 
-[Learn more in the documentation →](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/)
+[Learn more in the documentation →](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/)
+
+---
+
+## 🎵 For AI-Assisted Development
+
+**Using AI coding assistants like Cursor, GitHub Copilot, or Claude?**
+
+SwiftFlow is designed to work great with AI tools. Check out our [Vibecoders Guide](VIBECODERS.md) for:
+- 🚀 **Quick Start Prompts** — Copy-paste prompts to get started fast
+- 🎨 **Styling Templates** — Pre-made prompts for common node designs
+- 🔧 **Common Scenarios** — Solutions for typical use cases
+- 🐛 **Troubleshooting** — Fixes for common AI-generated code issues
+- 💡 **Pro Tips** — Best practices for AI-assisted SwiftFlow development
+
+**Example prompt:**
+> "Create a flowchart editor with rounded nodes that have a title and description"
+
+[Read the full Vibecoders Guide →](VIBECODERS.md)
 
 ---
 
@@ -187,7 +205,7 @@ Thank you for making your work open source and for building a community where ot
 
 ## 📞 Support
 
-- **Documentation**: [Swift-DocC Documentation](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/)
+- **Documentation**: [Swift-DocC Documentation](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/)
 - **Issues**: [GitHub Issues](https://github.com/jeffryberdugox/SwiftFlow/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/jeffryberdugox/SwiftFlow/discussions)
 

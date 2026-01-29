@@ -161,7 +161,7 @@ This is the first stable release. Future releases will maintain backward compati
 ## Links
 
 - [GitHub Repository](https://github.com/jeffryberdugox/SwiftFlow)
-- [Documentation](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/)
+- [Documentation](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/)
 - [Issue Tracker](https://github.com/jeffryberdugox/SwiftFlow/issues)
 
 [Unreleased]: https://github.com/jeffryberdugox/SwiftFlow/compare/v1.0.0...HEAD

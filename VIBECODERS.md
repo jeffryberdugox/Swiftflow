@@ -792,9 +792,9 @@ extension Color {
 
 ## 🔗 Resources
 
-- **Full Documentation**: [SwiftFlow Docs](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/)
-- **Getting Started**: [Tutorial](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/gettingstarted)
-- **Coordinate System**: [Deep Dive](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/coordinatesystem)
+- **Full Documentation**: [SwiftFlow Docs](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/)
+- **Getting Started**: [Tutorial](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/gettingstarted)
+- **Coordinate System**: [Deep Dive](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/coordinatesystem)
 - **GitHub**: [Issues & Discussions](https://github.com/jeffryberdugox/SwiftFlow)
 
 ---

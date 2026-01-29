@@ -64,8 +64,8 @@ jobs:
           
           ## Documentation
           
-          - [Interactive Documentation](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/)
-          - [Getting Started Guide](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/gettingstarted)
-          - [API Reference](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/)
+          - [Interactive Documentation](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/)
+          - [Getting Started Guide](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/gettingstarted)
+          - [API Reference](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/)
         draft: false
         prerelease: false

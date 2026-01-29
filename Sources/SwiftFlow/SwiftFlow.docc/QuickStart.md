@@ -25,7 +25,7 @@ After adding SwiftFlow to your project:
 - Browse all articles, guides, and API reference interactively
 
 **Online:**
-- [Browse online documentation](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/)
+- [Browse online documentation](https://jeffryberdugox.github.io/Swiftflow/documentation/swiftflow/)
 
 > **Note:** Documentation is automatically available in Xcode through Quick Help. You don't need to download anything extra!
 
