@@ -129,21 +129,25 @@ public struct NodeToolbarView<Content: View>: View {
     }
     
     /// Convenience initializer that calculates screen position from transform
+    /// Note: This uses the current transform value synchronously.
+    /// For reactive updates, use the main initializer and pass updated positions.
     public init(
         node: any FlowNode,
         panZoomManager: PanZoomManager,
         config: NodeToolbarConfig = .default,
         @ViewBuilder content: () -> Content
     ) {
+        // Access transform synchronously (works because we're on MainActor in SwiftUI context)
         let transform = panZoomManager.transform
+        
         self.node = node
+        self.config = config
+        self.content = content()
         self.nodeScreenPosition = transform.canvasToScreen(node.position)
         self.nodeScreenSize = CGSize(
             width: node.width * transform.scale,
             height: node.height * transform.scale
         )
-        self.config = config
-        self.content = content()
     }
     
     public var body: some View {
@@ -264,18 +268,20 @@ public extension View {
 // MARK: - Preview
 
 #Preview {
-    @StateObject var panZoomManager = PanZoomManager(
-        minZoom: 0.1,
-        maxZoom: 4.0
-    )
-    
-    let node = PreviewNode(
-        position: CGPoint(x: 200, y: 200),
-        width: 200,
-        height: 100
-    )
-    
-    return ZStack {
+    struct PreviewContainer: View {
+        @StateObject var panZoomManager = PanZoomManager(
+            minZoom: 0.1,
+            maxZoom: 4.0
+        )
+        
+        var body: some View {
+            let node = PreviewNode(
+                position: CGPoint(x: 200, y: 200),
+                width: 200,
+                height: 100
+            )
+            
+            ZStack {
         Color.gray.opacity(0.2)
         
         // Node representation
@@ -314,6 +320,10 @@ public extension View {
                 .buttonStyle(.plain)
             }
         }
+            }
+            .frame(width: 600, height: 400)
+        }
     }
-    .frame(width: 600, height: 400)
+    
+    return PreviewContainer()
 }

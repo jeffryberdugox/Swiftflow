@@ -93,7 +93,7 @@ private class ScrollMonitorNSView: NSView {
             guard let self = self, self.isEnabled else { return event }
             
             // Check if the event is within our view's bounds
-            guard let window = self.window else { return event }
+            guard self.window != nil else { return event }
             let locationInWindow = event.locationInWindow
             let locationInView = self.convert(locationInWindow, from: nil)
             let locationInBounds = self.bounds.contains(locationInView)
@@ -120,7 +120,7 @@ private class ScrollMonitorNSView: NSView {
             guard let self = self, self.isEnabled else { return event }
             
             // Check if the event is within our view's bounds
-            guard let window = self.window else { return event }
+            guard self.window != nil else { return event }
             let locationInWindow = event.locationInWindow
             let locationInView = self.convert(locationInWindow, from: nil)
             let locationInBounds = self.bounds.contains(locationInView)

@@ -29,7 +29,13 @@ private struct GlassEffectModifierNew<S: InsettableShape>: ViewModifier {
     let shape: S
     
     func body(content: Content) -> some View {
-        content.glassEffect(in: shape)
+        if #available(macOS 15.0, *) {
+            content.glassEffect(in: shape)
+        } else {
+            content
+                .background(.ultraThinMaterial, in: shape)
+                .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 4)
+        }
     }
 }
 
