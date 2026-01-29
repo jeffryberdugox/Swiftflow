@@ -1,0 +1,530 @@
+# SwiftFlow AI Coding Assistant Guide
+
+## Project Overview
+
+SwiftFlow is a modern, declarative node-based editor framework for SwiftUI. It provides interactive node graphs with drag-and-drop, connections, zoom/pan, and more.
+
+**Key Philosophy**: Declarative, type-safe, and predictable. Everything is driven by state changes.
+
+---
+
+## Critical Concepts
+
+### 1. The Three-Space Coordinate System
+
+**THIS IS THE MOST IMPORTANT CONCEPT IN SWIFTFLOW.**
+
+SwiftFlow uses THREE different coordinate spaces:
+
+1. **Canvas Space** - The infinite 2D plane where nodes live
+   - Node positions are in canvas space
+   - Origin at (0, 0), can be negative
+   - Independent of zoom/pan
+
+2. **Screen Space** - The visible viewport coordinates
+   - Where users see things on screen
+   - Affected by zoom and pan
+   - Used for rendering
+
+3. **Node-Local Space** - Coordinates relative to a node's top-left corner
+   - Port positions are in node-local space
+   - Used for hit testing within nodes
+
+**Conversion Functions:**
+```swift
+// Canvas → Screen
+func canvasToScreen(_ point: CGPoint, viewport: CanvasViewport) -> CGPoint
+
+// Screen → Canvas
+func screenToCanvas(_ point: CGPoint, viewport: CanvasViewport) -> CGPoint
+
+// Node-local → Canvas
+func nodeLocalToCanvas(_ localPoint: CGPoint, node: any FlowNode) -> CGPoint
+
+// Canvas → Node-local
+func canvasToNodeLocal(_ canvasPoint: CGPoint, node: any FlowNode) -> CGPoint
+```
+
+**When to use each:**
+- Storing node positions? → Canvas space
+- Drawing edges between ports? → Calculate in canvas, render in screen
+- Handling drag gestures? → Convert screen → canvas
+- Port hit testing? → Convert to node-local space
+
+### 2. Core Protocols
+
+**FlowNode** - Anything that can be a node:
+```swift
+protocol FlowNode: Identifiable, Equatable {
+    var id: UUID { get }
+    var position: CGPoint { get set }  // Always in canvas space!
+    var width: CGFloat { get set }
+    var height: CGFloat { get set }
+    var inputPorts: [any FlowPort] { get }
+    var outputPorts: [any FlowPort] { get }
+}
+```
+
+**FlowEdge** - Connections between nodes:
+```swift
+protocol FlowEdge: Identifiable, Equatable {
+    var id: UUID { get }
+    var sourceNodeId: UUID { get }
+    var sourcePortId: UUID { get }
+    var targetNodeId: UUID { get }
+    var targetPortId: UUID { get }
+}
+```
+
+**FlowPort** - Connection points on nodes:
+```swift
+protocol FlowPort: Identifiable, Equatable {
+    var id: UUID { get }
+    var position: PortPosition { get }  // .top, .bottom, .left, .right
+    var offset: CGFloat { get }         // Offset along the edge
+}
+```
+
+### 3. Port Positioning System
+
+Ports are positioned on node edges using `PortPosition`:
+
+```swift
+enum PortPosition {
+    case top(offset: CGFloat = 0)
+    case bottom(offset: CGFloat = 0)
+    case left(offset: CGFloat = 0)
+    case right(offset: CGFloat = 0)
+}
+```
+
+**Offset is ALWAYS from the center:**
+- `offset: 0` → Center of the edge
+- `offset: -50` → 50pt left/above center
+- `offset: 50` → 50pt right/below center
+
+**Example:**
+```swift
+// Three ports on the left edge:
+var inputPorts: [any FlowPort] {
+    [
+        BasicPort(id: UUID(), position: .left(offset: -30)),  // Top
+        BasicPort(id: UUID(), position: .left(offset: 0)),    // Center
+        BasicPort(id: UUID(), position: .left(offset: 30))    // Bottom
+    ]
+}
+```
+
+---
+
+## Common Patterns
+
+### Pattern 1: Basic Node Implementation
+
+```swift
+struct MyCustomNode: FlowNode, Codable {
+    let id: UUID
+    var position: CGPoint
+    var width: CGFloat = 200
+    var height: CGFloat = 100
+    
+    // Custom data
+    var title: String
+    var value: Int
+    
+    var inputPorts: [any FlowPort] {
+        [BasicPort(id: UUID(), position: .left)]
+    }
+    
+    var outputPorts: [any FlowPort] {
+        [BasicPort(id: UUID(), position: .right)]
+    }
+}
+```
+
+### Pattern 2: Basic Canvas Setup
+
+```swift
+struct MyFlowEditor: View {
+    @State private var nodes: [MyCustomNode] = []
+    @State private var edges: [BasicEdge] = []
+    
+    var body: some View {
+        CanvasView(nodes: $nodes, edges: $edges) { node, isSelected in
+            MyNodeView(node: node, isSelected: isSelected)
+        }
+        .onConnectionCreated { sourceId, sourcePortId, targetId, targetPortId in
+            let newEdge = BasicEdge(
+                id: UUID(),
+                sourceNodeId: sourceId,
+                sourcePortId: sourcePortId,
+                targetNodeId: targetId,
+                targetPortId: targetPortId
+            )
+            edges.append(newEdge)
+        }
+    }
+}
+```
+
+### Pattern 3: Using CanvasController for Programmatic Control
+
+```swift
+struct AdvancedEditor: View {
+    @State private var nodes: [MyNode] = []
+    @State private var edges: [BasicEdge] = []
+    @State private var controller: CanvasController?
+    
+    var body: some View {
+        VStack {
+            // Toolbar
+            HStack {
+                Button("Add Node") {
+                    addNodeAtCenter()
+                }
+                Button("Fit View") {
+                    controller?.fitView()
+                }
+                Button("Undo") {
+                    controller?.undo()
+                }
+            }
+            
+            // Canvas
+            CanvasView(nodes: $nodes, edges: $edges) { node, isSelected in
+                MyNodeView(node: node)
+            }
+            .onControllerCreated { controller = $0 }
+        }
+    }
+    
+    func addNodeAtCenter() {
+        guard let controller = controller else { return }
+        
+        // Get center of viewport in canvas space
+        let viewport = controller.viewport
+        let screenCenter = CGPoint(x: viewport.size.width / 2, 
+                                  y: viewport.size.height / 2)
+        let canvasCenter = screenToCanvas(screenCenter, viewport: viewport)
+        
+        let newNode = MyNode(
+            id: UUID(),
+            position: canvasCenter,
+            width: 200,
+            height: 100
+        )
+        nodes.append(newNode)
+    }
+}
+```
+
+### Pattern 4: Custom Edge Styling
+
+```swift
+CanvasView(nodes: $nodes, edges: $edges) { node, isSelected in
+    MyNodeView(node: node)
+}
+.edgeStyle(.bezier)
+.edgeColor(.blue)
+.edgeWidth(2.0)
+.showEdgeMarkers(true)
+```
+
+### Pattern 5: MiniMap Configuration
+
+```swift
+CanvasView(nodes: $nodes, edges: $edges) { node, isSelected in
+    MyNodeView(node: node)
+}
+.miniMap(
+    position: .bottomRight,
+    size: CGSize(width: 200, height: 150),
+    nodeColor: .blue,
+    backgroundColor: .white.opacity(0.9),
+    borderColor: .gray
+)
+```
+
+---
+
+## Critical Rules for AI Assistants
+
+### ✅ DO:
+
+1. **Always use canvas space for node positions**
+   ```swift
+   node.position = CGPoint(x: 100, y: 100)  // ✅ Canvas space
+   ```
+
+2. **Use provided conversion functions for coordinate transforms**
+   ```swift
+   let screenPoint = canvasToScreen(node.position, viewport: viewport)
+   ```
+
+3. **Store port offsets from center**
+   ```swift
+   BasicPort(id: UUID(), position: .left(offset: -30))  // ✅ From center
+   ```
+
+4. **Use type-erased arrays for ports**
+   ```swift
+   var inputPorts: [any FlowPort] { [...] }  // ✅ Correct
+   ```
+
+5. **Make nodes Codable for persistence**
+   ```swift
+   struct MyNode: FlowNode, Codable { ... }  // ✅ Best practice
+   ```
+
+6. **Use CanvasController for programmatic operations**
+   ```swift
+   controller?.selectNode(id: nodeId)
+   controller?.deleteSelectedNodes()
+   controller?.fitView()
+   ```
+
+### ❌ DON'T:
+
+1. **Never mix coordinate spaces**
+   ```swift
+   // ❌ WRONG - mixing screen and canvas space
+   node.position = gesture.location
+   ```
+
+2. **Never calculate port positions manually**
+   ```swift
+   // ❌ WRONG - use PortPosition enum instead
+   let portX = node.position.x + node.width
+   ```
+
+3. **Never forget to update bindings**
+   ```swift
+   // ❌ WRONG - direct mutation
+   nodes[0].position = newPosition
+   
+   // ✅ CORRECT - update through binding
+   if let index = nodes.firstIndex(where: { $0.id == nodeId }) {
+       nodes[index].position = newPosition
+   }
+   ```
+
+4. **Never ignore the viewport in calculations**
+   ```swift
+   // ❌ WRONG - ignoring zoom
+   let distance = node1.position.distance(to: node2.position)
+   
+   // ✅ CORRECT - account for viewport
+   let screenDistance = distance * viewport.zoom
+   ```
+
+5. **Never hardcode port positions to corners**
+   ```swift
+   // ❌ WRONG
+   let portPosition = CGPoint(x: node.width, y: node.height / 2)
+   
+   // ✅ CORRECT - use PortPosition enum
+   BasicPort(id: UUID(), position: .right(offset: 0))
+   ```
+
+---
+
+## Architecture Overview
+
+```
+SwiftFlow/
+├── Views/
+│   ├── CanvasView.swift           # Main container, handles zoom/pan
+│   ├── NodeContainerView.swift    # Renders all nodes
+│   ├── EdgeContainerView.swift    # Renders all edges
+│   └── MiniMapView.swift          # Optional minimap
+├── Managers/
+│   ├── DragManager.swift          # Node dragging logic
+│   ├── SelectionManager.swift     # Multi-select, rubber band
+│   ├── ConnectionManager.swift    # Edge creation logic
+│   └── HelperLineManager.swift    # Snap-to-align guides
+├── Controller/
+│   └── CanvasController.swift     # Programmatic API
+├── Core/
+│   ├── Commands/                  # Undo/redo commands
+│   ├── CoordinateSpace.swift      # Space conversion utilities
+│   └── CanvasViewport.swift       # Viewport state
+└── Protocols/
+    ├── FlowNode.swift             # Node protocol
+    ├── FlowEdge.swift             # Edge protocol
+    └── FlowPort.swift             # Port protocol
+```
+
+**Data Flow:**
+1. User interacts with view
+2. Manager handles interaction
+3. Manager creates Command
+4. Command modifies state
+5. SwiftUI re-renders
+
+---
+
+## Testing Patterns
+
+### Unit Test: Coordinate Conversion
+```swift
+func testCanvasToScreen() {
+    let viewport = CanvasViewport(
+        offset: .zero,
+        zoom: 1.0,
+        size: CGSize(width: 800, height: 600)
+    )
+    
+    let canvasPoint = CGPoint(x: 100, y: 100)
+    let screenPoint = canvasToScreen(canvasPoint, viewport: viewport)
+    
+    XCTAssertEqual(screenPoint, CGPoint(x: 100, y: 100))
+}
+```
+
+### Integration Test: Node Creation
+```swift
+func testAddNode() {
+    var nodes: [TestNode] = []
+    
+    let newNode = TestNode(
+        id: UUID(),
+        position: CGPoint(x: 0, y: 0),
+        width: 200,
+        height: 100
+    )
+    nodes.append(newNode)
+    
+    XCTAssertEqual(nodes.count, 1)
+    XCTAssertEqual(nodes[0].position, CGPoint(x: 0, y: 0))
+}
+```
+
+---
+
+## Common Issues & Solutions
+
+### Issue 1: Nodes appear in wrong position after zoom
+
+**Problem:** Forgetting to account for viewport in calculations
+
+**Solution:**
+```swift
+// Always use viewport-aware conversions
+let canvasPos = screenToCanvas(gesture.location, viewport: viewport)
+node.position = canvasPos
+```
+
+### Issue 2: Edges don't connect to ports correctly
+
+**Problem:** Calculating port positions manually instead of using PortPosition
+
+**Solution:**
+```swift
+// Let SwiftFlow calculate port positions
+let port = BasicPort(id: UUID(), position: .right(offset: 20))
+```
+
+### Issue 3: Undo/Redo doesn't work
+
+**Problem:** Modifying state directly instead of through commands
+
+**Solution:**
+```swift
+// Use controller commands
+controller?.deleteNode(id: nodeId)  // ✅ Tracked
+// Not: nodes.removeAll { $0.id == nodeId }  // ❌ Not tracked
+```
+
+### Issue 4: Custom node not rendering
+
+**Problem:** Missing Equatable conformance or incorrect @State usage
+
+**Solution:**
+```swift
+// Ensure proper conformance
+struct MyNode: FlowNode, Equatable {
+    static func == (lhs: MyNode, rhs: MyNode) -> Bool {
+        lhs.id == rhs.id &&
+        lhs.position == rhs.position &&
+        lhs.width == rhs.width &&
+        lhs.height == rhs.height
+    }
+}
+```
+
+---
+
+## Quick Reference
+
+### Viewport Properties
+```swift
+viewport.offset: CGPoint    // Pan offset
+viewport.zoom: CGFloat      // Zoom level (1.0 = 100%)
+viewport.size: CGSize       // Visible area size
+```
+
+### Controller Commands
+```swift
+controller.selectNode(id:)
+controller.deselectAll()
+controller.deleteNode(id:)
+controller.deleteSelectedNodes()
+controller.fitView()
+controller.centerOnNodes(_:)
+controller.undo()
+controller.redo()
+controller.moveNode(id:by:)
+controller.resizeNode(id:toWidth:height:)
+```
+
+### Edge Styles
+```swift
+.edgeStyle(.bezier)      // Smooth curves
+.edgeStyle(.smoothStep)  // Right-angle with curves
+.edgeStyle(.straight)    // Direct lines
+```
+
+### MiniMap Positions
+```swift
+.bottomLeft
+.bottomRight
+.topLeft
+.topRight
+```
+
+---
+
+## Performance Tips
+
+1. **Use Codable for serialization** - SwiftFlow nodes work great with JSON
+2. **Avoid expensive computations in node views** - Cache computed properties
+3. **Use lazy loading for large graphs** - Only render visible nodes
+4. **Debounce frequent updates** - Especially in onNodeMoved callbacks
+5. **Profile with Instruments** - Check for retain cycles in custom managers
+
+---
+
+## Resources
+
+- **Documentation**: https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/
+- **Getting Started**: https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/gettingstarted
+- **Coordinate System**: https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/coordinatesystem
+- **Issues**: https://github.com/jeffryberdugox/SwiftFlow/issues
+
+---
+
+## Final Notes for AI Assistants
+
+When generating SwiftFlow code:
+
+1. ✅ Always ask about coordinate space if unclear
+2. ✅ Use the provided protocols and types
+3. ✅ Follow the declarative SwiftUI patterns
+4. ✅ Test coordinate conversions carefully
+5. ✅ Reference the documentation when unsure
+
+SwiftFlow is designed to be predictable and type-safe. If something feels hacky or requires manual calculations, there's probably a better API for it.
+
+**Most Common Mistake**: Mixing coordinate spaces. Always be explicit about which space you're working in.
+
+**Golden Rule**: When in doubt, check the coordinate space and use the conversion functions.
