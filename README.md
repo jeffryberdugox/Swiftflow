@@ -6,9 +6,9 @@
 [![SwiftPM](https://img.shields.io/badge/SwiftPM-compatible-brightgreen.svg)](https://swift.org/package-manager)
 [![Documentation](https://img.shields.io/badge/docs-Swift%20DocC-blue)](https://jeffryberdugox.github.io/SwiftFlow/documentation/swiftflow/)
 
-A modern, declarative node-based editor framework for SwiftUI.
+A modern, declarative **node-based editor framework** for **SwiftUI**. Build interactive flowcharts, diagrams, and visual programming tools for macOS.
 
-> Inspired by [React Flow](https://reactflow.dev/), SwiftFlow brings professional node-based editing to the Swift ecosystem.
+> Inspired by [React Flow](https://reactflow.dev/), SwiftFlow brings professional node graph editing to the Swift ecosystem with a native SwiftUI API.
 
 ---
 
@@ -113,14 +113,17 @@ After adding SwiftFlow to your project:
 
 ---
 
-## 🎯 What Can You Build?
+## 🎯 Use Cases
 
-- **Visual Programming Tools** — Node-based coding environments
-- **Workflow Editors** — Automation and process builders  
-- **Diagram Applications** — Flowcharts, mind maps, UML
-- **Data Pipeline Builders** — ETL and data processing tools
-- **State Machine Editors** — Visual state management
-- **Audio/Video Processing** — Node-based effects chains
+SwiftFlow is perfect for building:
+
+- **Flowchart Editors** — Create visual workflow and process diagram applications
+- **Node Graph Editors** — Build shader editors, material designers, or blueprint systems
+- **Visual Programming Tools** — Develop no-code/low-code environments with drag-and-drop logic
+- **Diagram Applications** — Flowcharts, mind maps, UML diagrams, and organization charts
+- **Data Flow Visualizers** — ETL pipeline builders and data processing tools
+- **State Machine Designers** — Visual finite state machine editors
+- **Audio/Video Processing** — Node-based effect chains and signal routing
 
 ---
 

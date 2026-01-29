@@ -1,0 +1,13 @@
+A modern, declarative node-based editor framework for SwiftUI. Build interactive flowcharts, diagrams, and visual editors for macOS.
+
+SwiftFlow brings professional node-based editing to the Swift ecosystem, inspired by React Flow and Vue Flow. Features include declarative API, interactive nodes, flexible edges, undo/redo support, MiniMap, helper lines, and zero dependencies.
+
+Perfect for building:
+• Flowchart editors
+• Diagram tools
+• Visual programming interfaces
+• Data flow visualizers
+• Node graph editors
+• State machine designers
+
+Built entirely with SwiftUI for seamless integration into macOS applications.
